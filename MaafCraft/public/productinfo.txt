@@ -1,0 +1,13 @@
+item
+development_name
+development_no
+materials
+weight
+size
+technique
+color
+FOB_price_per_pcs$
+remarks
+moq
+lead_time
+description

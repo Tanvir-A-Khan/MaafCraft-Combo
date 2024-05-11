@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  jachai-mongodb:
+    image: mongo:latest
+    container_name: "jachai-mongodb"
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - mongodb-network
+
+networks:
+  mongodb-network:
+    driver: bridge
+volumes:
+    mongodb-data:
