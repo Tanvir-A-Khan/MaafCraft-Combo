@@ -1,12 +1,17 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Link from "next/link";
 import { loginUser, registerUser } from "../api/api";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import Context from "../components/HeaderTop";
+import { useStateContext } from "../Context/AppContext";
 
 const RegistrationForm = () => {
+    const { globalState, setGlobalState } = useStateContext();
+    // const [auth, setAuth] = useContext(Context);
     const router = useRouter();
+
     const [formDataRegistration, setFormDataRegistration] = useState({
         name: "",
         email: "",
@@ -27,10 +32,10 @@ const RegistrationForm = () => {
         e.preventDefault();
         try {
             const data = await registerUser(formDataRegistration);
-            if(data.result){
+            if (data.result) {
                 console.log(data);
                 toast(data.message);
-            }else{
+            } else {
                 toast(data.message);
             }
             setFormDataRegistration({
@@ -62,23 +67,21 @@ const RegistrationForm = () => {
         }));
     };
 
-    const handleLogin = async(e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
         console.log("Form submitted with data:", formDataLogin);
 
-        try{
+        try {
             const data = await loginUser(formDataLogin);
             console.log(data);
-            toast("Login in Success")
-            // window.location.href = '/'
-            // router.push("/");
-            // window.location.reload();
-
-            setFormDataLogin({});
-            router.push("/")
-            
-
-        }catch(e){
+            setGlobalState(true);
+            toast("Login in Success");
+            setFormDataLogin({
+                email: "",
+                password: "",
+            });
+            router.push("/");
+        } catch (e) {
             console.log(e);
         }
         // Add your form submission logic here
@@ -91,11 +94,14 @@ const RegistrationForm = () => {
                 className="lg:w-[48%] my-6 p-6  bg-white rounded-lg shadow-lg"
             >
                 <Toaster position="top-center" reverseOrder={true} />
-                <h2 className="text-2xl font-bold  uppercase">
-                    New Customer
-                </h2>
+                <h2 className="text-2xl font-bold  uppercase">New Customer</h2>
                 <p className="">Register Here</p>
-                <hr /><hr /><hr /><hr /><hr /><br />
+                <hr />
+                <hr />
+                <hr />
+                <hr />
+                <hr />
+                <br />
                 <div className="mb-4">
                     <label
                         htmlFor="name"
@@ -212,7 +218,11 @@ const RegistrationForm = () => {
                     Returning Customer
                 </h2>
                 <p>Login Here</p>
-                <hr /><hr /><hr /><hr /><hr />
+                <hr />
+                <hr />
+                <hr />
+                <hr />
+                <hr />
                 <br />
 
                 <div className="mb-4">
@@ -257,7 +267,9 @@ const RegistrationForm = () => {
                     Login
                 </button>
                 <p className="text-sm my-4">
-                    <Link href="/forget-password">Forgot you password? Reset here</Link>
+                    <Link href="/forget-password">
+                        Forgot you password? Reset here
+                    </Link>
                 </p>
             </form>
         </div>

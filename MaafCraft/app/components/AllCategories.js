@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { getAllCategories } from "../api/api";
+import {  getAllTypes } from "../api/api";
 import Spinner from "./Spinner";
 import { useRouter } from "next/navigation";
 
@@ -13,7 +13,7 @@ const AllCategories = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const categoriesResponse = await getAllCategories();
+                const categoriesResponse = await getAllTypes("PRODUCT_TYPE");
                 setCategories(categoriesResponse.data);
                 setLoading(false);
             } catch (error) {

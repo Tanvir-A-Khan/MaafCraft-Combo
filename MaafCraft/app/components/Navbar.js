@@ -1,5 +1,5 @@
 "use client"
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faHome,
@@ -7,10 +7,22 @@ import {
 import Link from "next/link";       
 import { usePathname } from "next/navigation";
 import NavBarPopOver from "./NavBarPopOver";
-import CustomNav from "./CustomNav";
-
+import { useStateContext } from "../Context/AppContext";
+import { extractDataFromJWT } from "../auth";
 
 const Navbar = () => {
+    const {globalState} = useStateContext();
+    const [isAdmin, setIsAdmin] =  useState(false);
+    useEffect(()=>{
+        if(globalState!==null & typeof globalState !== undefined){
+            const data = extractDataFromJWT(globalState);
+            if(data){
+                console.log(data);
+                setIsAdmin(data.roles.includes("ROLE_ADMIN"))
+            }
+
+        }
+    },[globalState])
     return (
         <div className="sticky top-0 z-10 ">
             <NavBarPopOver/>
@@ -66,13 +78,13 @@ const Navbar = () => {
                         </li>
                     </Link>
 
-                    <Link href={"/membership"}  className={`hover:bg-[#555555] duration-300 hover:cursor-pointer h-[100%] 
-                            flex items-center ${usePathname() === "/membership"
+                    <Link href={"/catalog"}  className={`hover:bg-[#555555] duration-300 hover:cursor-pointer h-[100%] 
+                            flex items-center ${usePathname() === "/catalog"
                                             ? "bg-[#2e2e2e] text-white "
                                             : null
                                         }`}>
                         <li >
-                            Membership
+                            Catalog
                         </li>
                     </Link>
                     <Link href={"/material-info"}  className={`hover:bg-[#555555] duration-300 hover:cursor-pointer h-[100%] 
@@ -102,15 +114,18 @@ const Navbar = () => {
                             Contact
                         </li>
                     </Link>
+                    {
+                        isAdmin &&
                     <Link href={"/admin-panel"}  className={`hover:bg-[#555555] duration-300 hover:cursor-pointer h-[100%] 
-                            flex items-center ${usePathname() === "/admin-panel"
-                                            ? "bg-[#2e2e2e] text-white "
-                                            : null
-                                        }`}>
+                    flex items-center ${usePathname() === "/admin-panel"
+                    ? "bg-[#2e2e2e] text-white "
+                    : null
+                }`}>
                         <li >
                             Admin Panel
                         </li>
                     </Link>
+                    }
                 </ul>
             </div>
         </div>
