@@ -1,27 +1,22 @@
-package maafcraft.backend.model;
+package maafcraft.backend.dto.request;
 
+public class AddCart {
 
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Document(collection = "cart")
-public class Cart {
-    @Id
-    private ObjectId id;
     private String productName;
     private String image;
     private double weight;
-    private double CBM;
-    private int quantity; // Numeric type for quantity
+    private double cbm;
     private double price;
-    @Indexed
-    private String browserId; // camelCase naming convention
+    private int quantity;
+    private String browserId;
     private String email;
 
-    public ObjectId getId() {
-        return id;
+    public double getCbm() {
+        return cbm;
+    }
+
+    public void setCbm(double cbm) {
+        this.cbm = cbm;
     }
 
     public double getPrice() {
@@ -30,10 +25,6 @@ public class Cart {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public void setId(ObjectId id) {
-        this.id = id;
     }
 
     public String getProductName() {
@@ -60,13 +51,7 @@ public class Cart {
         this.weight = weight;
     }
 
-    public double getCBM() {
-        return CBM;
-    }
 
-    public void setCBM(double CBM) {
-        this.CBM = CBM;
-    }
 
     public int getQuantity() {
         return quantity;

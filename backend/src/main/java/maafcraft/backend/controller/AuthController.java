@@ -38,7 +38,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<Response> register(@RequestBody @Valid UserRegistrationRequest userRegistrationRequest,
                                              BindingResult bindingResult) {
-        System.out.println( userRegistrationRequest.toString());
+//        System.out.println( userRegistrationRequest.toString());
         return userService.registerNewUser(userRegistrationRequest, bindingResult);
 //        return new ResponseEntity<>(new Response(true, "Working"), HttpStatus.OK);
     }

@@ -47,12 +47,12 @@ public class AuthenticationServiceImp implements AuthenticationService{
 
 
             if (!userService.isExistsUserEmail(email)) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new
-                        Response(false, "Email or password doesn't match"));
+                return ResponseEntity.status(HttpStatus.OK).body(new
+                        Response(false, "Email doesn't exist"));
             }
 
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(email, password));
+//            authenticationManager.authenticate(
+//                    new UsernamePasswordAuthenticationToken(email, password));
 
             User user = userService.getFindByEmail(email)
                     .orElseThrow(() -> new IllegalArgumentException("Invalid email or password!"));

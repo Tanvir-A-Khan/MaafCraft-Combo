@@ -1,13 +1,12 @@
 package maafcraft.backend.services;
 
 import maafcraft.backend.controller.ProductController;
-import maafcraft.backend.dto.response.Response;
-import maafcraft.backend.dto.response.Search;
+import maafcraft.backend.dto.response.*;
+import maafcraft.backend.model.enums.ProductType;
+import maafcraft.backend.model.enums.subenums.*;
 import maafcraft.backend.repositories.CategoryRepository;
 import maafcraft.backend.repositories.ProductRepository;
 import maafcraft.backend.dto.request.ProductReq;
-import maafcraft.backend.dto.response.DashboardProductResponse;
-import maafcraft.backend.dto.response.ProductResponse;
 import maafcraft.backend.model.Category;
 import maafcraft.backend.model.Product;
 import maafcraft.backend.model.submodels.ProductDetails;
@@ -27,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService implements IProductService {
@@ -515,6 +515,62 @@ public class ProductService implements IProductService {
 
     }
 
+    @Override
+    public ResponseEntity<Response> getCategories(String category) {
+        List<String> types = new ArrayList<>();
+
+        if(category.equals("ProductType")){
+            types = Arrays.stream(ProductType.values())
+                    .map(Enum::name)
+                    .collect(Collectors.toList());
+        }else if(category.equals("BagsType")){
+            types = Arrays.stream(BagsType.values())
+                    .map(Enum::name)
+                    .collect(Collectors.toList());
+        }else if(category.equals("Date_LeafType")){
+            types = Arrays.stream(Date_LeafType.values())
+                    .map(Enum::name)
+                    .collect(Collectors.toList());
+        }else if(category.equals("PatType")){
+            types = Arrays.stream(PatType.values())
+                    .map(Enum::name)
+                    .collect(Collectors.toList());
+        }else if(category.equals("RattanType")){
+            types = Arrays.stream(RattanType.values())
+                    .map(Enum::name)
+                    .collect(Collectors.toList());
+        }else if(category.equals("SeagrassType")){
+            types = Arrays.stream(SeagrassType.values())
+                    .map(Enum::name)
+                    .collect(Collectors.toList());
+        }
+
+
+            return new ResponseEntity<>(new Response(true, "Success", types),
+                HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Response> getGallery() {
+        List<Product> productList = productRepository.findAll();
+        List<GalleryResponse> galleryResponses = getGalleryResponse(productList);
+
+        return new ResponseEntity<>(new Response(true, "Success", galleryResponses),
+                HttpStatus.OK);
+    }
+    public List<GalleryResponse>  getGalleryResponse(List<Product> productList){
+        List<GalleryResponse> responses = new ArrayList<>();
+        for(Product product: productList){
+            GalleryResponse galleryResponse = new GalleryResponse();
+            galleryResponse.setSrc(product.getImages().get(0));
+            galleryResponse.setAspect_ratio(product.getItem());
+            galleryResponse.setProductName(product.getItem());
+
+            responses.add(galleryResponse);
+        }
+
+        return responses;
+    }
     public List<Product> searchNames(String searchTerm) {
         Query query = new Query();
         Criteria criteria = Criteria.where("item").regex(searchTerm, "i");

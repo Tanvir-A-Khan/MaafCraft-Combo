@@ -50,9 +50,10 @@ public class SecurityConfiguration {
                                 "/user-logout",
                                 "/refresh",
                                 "/products/**",
+                                "/cart/**",
                                 "/check-existing-user")
                         .permitAll()
-                        .requestMatchers("/controller1/**")
+                        .requestMatchers("/admin/**")
                         .hasAnyAuthority(UserRole.ROLE_ADMIN.name())
                         .anyRequest()
                         .authenticated())

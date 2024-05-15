@@ -158,7 +158,7 @@ public class ProductController {
 
         return productService.updateAProduct(productResponse) ;
     }
-    @DeleteMapping("/update-product")
+    @DeleteMapping("/delete-product")
     public ResponseEntity<Response> deleteProduct(@RequestParam String id){
 
         return productService.deleteAProduct(id) ;
@@ -222,9 +222,24 @@ public class ProductController {
     public ResponseEntity<Response> getProductNameAutoComplete(
             @RequestParam(name = "item") String item
     ){
-        System.out.println("working");
         return productService.getNameAutoComplete(item);
     }
+
+
+    @GetMapping("/get-all-types")
+    public ResponseEntity<Response> getCatgories(
+            @RequestParam(name = "category") String category
+    ){
+
+        return productService.getCategories(category);
+    }
+
+    @GetMapping("/gallery")
+    public ResponseEntity<Response> getAllImages(){
+
+        return productService.getGallery();
+    }
+
 
 
 
