@@ -5,7 +5,7 @@ const InfoImage = (props) => {
   const { imageUrl, productName } = props;
 
   return (
-    <div className=" md:w-[500px] w-[345px] h-[250px] ">
+    <div className=" md:w-[800px] w-[445px] h-[250px] ">
       <img
         src={imageUrl}
         alt={productName}

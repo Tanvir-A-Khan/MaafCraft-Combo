@@ -7,9 +7,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
+import { addFeedBack } from "../api/api";
+import toast, { Toaster } from "react-hot-toast";
 
 const ContactForm = () => {
-    const [forlgata, setForlgata] = useState({
+    const [data, setData] = useState({
         name: "",
         email: "",
         phone: "",
@@ -18,21 +20,35 @@ const ContactForm = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setForlgata((prev) => ({
+        setData((prev) => ({
             ...prev,
             [name]: value,
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
-        // Handle the form submission logic, possibly sending the data to a server
-        console.log(forlgata);
+        // Handle the form asubmission logic, possibly sending the data to a server
+        const res = await addFeedBack({
+            name: data.name,
+            email: data.email,
+            phone: data.phone,
+            message:data.comment
+        })
+        console.log(res);
+        setData({
+            name: "",
+            email: "",
+            phone: "",
+            comment: "",
+        })
+        toast(res.message);
     };
 
     return (
         <div className="lg:mx-28 mx-2">
             <div className="container flex flex-wrap  flex-col lg:flex-row items-start mt-4 justify-center ">
+            <Toaster position="top-center" reverseOrder={true} />
                 {/* Form for leaving a message */}
                 <div className="w-full lg:w-[45%] bg-slate-100 p-4  m-2 rounded-xl">
                     <h2 className="text-lg mb-5 font-semibold">
@@ -52,7 +68,7 @@ const ContactForm = () => {
                                 type="text"
                                 placeholder="Your Name"
                                 name="name"
-                                value={forlgata.name}
+                                value={data.name}
                                 onChange={handleChange}
                                 required
                             />
@@ -70,7 +86,7 @@ const ContactForm = () => {
                                 type="email"
                                 placeholder="Your Email"
                                 name="email"
-                                value={forlgata.email}
+                                value={data.email}
                                 onChange={handleChange}
                                 required
                             />
@@ -88,7 +104,7 @@ const ContactForm = () => {
                                 type="tel"
                                 placeholder="Your Phone Number"
                                 name="phone"
-                                value={forlgata.phone}
+                                value={data.phone}
                                 onChange={handleChange}
                             />
                         </div>
@@ -104,7 +120,7 @@ const ContactForm = () => {
                                 id="comment"
                                 placeholder="Your message..."
                                 name="comment"
-                                value={forlgata.comment}
+                                value={data.comment}
                                 onChange={handleChange}
                             />
                         </div>

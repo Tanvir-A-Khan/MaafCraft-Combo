@@ -51,6 +51,7 @@ public class SecurityConfiguration {
                                 "/refresh",
                                 "/products/**",
                                 "/cart/**",
+                                "/message",
                                 "/check-existing-user")
                         .permitAll()
                         .requestMatchers("/admin/**")

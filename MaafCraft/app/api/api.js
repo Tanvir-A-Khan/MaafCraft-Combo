@@ -184,3 +184,15 @@ export async function getGalleryImages() {
         return error;
     }
 }
+
+export async function addFeedBack(data) {
+    try {
+        let req = `/message`;
+        console.log(req);
+        const response = await backend.post(req, data);
+        // console.log(response.data);
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+}

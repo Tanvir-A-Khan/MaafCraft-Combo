@@ -29,8 +29,8 @@ const License = () => {
                         alt="License 1"
                         className="w-56 h-72 hover:scale-105 transition-all "
                     /> */}
-                    <h1 className="text-xl font-semibold text-center">
-                        License 1
+                    <h1 className="text-sm font-semibold text-center">
+                        Trade License Maafcraft
                     </h1>
                 </div>
                 <div className="w-56 h-auto m-2">
@@ -41,8 +41,8 @@ const License = () => {
                             className="w-56 h-72 hover:scale-105 transition-all "
                         />
                     </Zoom>
-                    <h1 className="text-xl font-semibold text-center">
-                        License 2
+                    <h1 className="text-sm font-semibold text-center">
+                        Tax Registration Certificate
                     </h1>
                 </div>
 
@@ -54,8 +54,8 @@ const License = () => {
                             className="w-56 h-72 hover:scale-105 transition-all "
                         />
                     </Zoom>
-                    <h1 className="text-xl font-semibold text-center">
-                        License 3
+                    <h1 className="text-sm font-semibold text-center">
+                        Handicraft License
                     </h1>
                 </div>
                 <div className="w-56 h-auto m-2">
@@ -66,8 +66,8 @@ const License = () => {
                             className="w-56 h-72 hover:scale-105 transition-all "
                         />
                     </Zoom>
-                    <h1 className="text-xl font-semibold text-center">
-                        License 4
+                    <h1 className="text-sm font-semibold text-center">
+                        Import Export License
                     </h1>
                 </div>
                 <div className="w-56 h-auto m-2">
@@ -78,8 +78,8 @@ const License = () => {
                             className="w-56 h-72 hover:scale-105 transition-all "
                         />
                     </Zoom>
-                    <h1 className="text-xl font-semibold text-center">
-                        License 5
+                    <h1 className="text-sm font-semibold text-center">
+                        Fire License
                     </h1>
                 </div>
                 <div className="w-56 h-auto m-2">
@@ -90,8 +90,8 @@ const License = () => {
                             className="w-56 h-72 hover:scale-105 transition-all "
                         />
                     </Zoom>
-                    <h1 className="text-xl font-semibold text-center">
-                        License 6
+                    <h1 className="text-sm font-semibold text-center">
+                        Handicraft Manufacturer and Export License 
                     </h1>
                 </div>
                 <div className="w-56 h-auto m-2">
@@ -102,8 +102,8 @@ const License = () => {
                             className="w-56 h-72 hover:scale-105 transition-all "
                         />
                     </Zoom>
-                    <h1 className="text-xl font-semibold text-center">
-                        License 7
+                    <h1 className="text-sm font-semibold text-center">
+                        Factory License
                     </h1>
                 </div>
             </div>

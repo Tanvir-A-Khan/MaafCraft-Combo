@@ -17,7 +17,7 @@ const MaterialInfo = () => {
                          productName="Basket!"
                     />
                     <p className="text-justify text-wrap w-full bg-slate-50 rounded-lg p-4 ">
-                    <strong>Jute: </strong>
+                    <strong className="text-xl bg-slate-100">Jute: </strong>
                       {" "}
                         Scientific name of Jute (Corchorus Olitorius). This
                         material can be used to prepare different types of

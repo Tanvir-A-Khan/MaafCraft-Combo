@@ -51,7 +51,7 @@ const Carousel = () => {
                         }}
                     >
                         <div className="flex flex-col items-center justify-end h-full">
-                            <div className="bg-slate-600 bg-opacity-10 w-full flex flex-col items-start ps-20 p-4">
+                            <div className="bg-white bg-opacity-40 w-full flex flex-col items-start ps-20 p-4">
                                 {" "}
                                 {/* Adjust opacity value as needed */}
                                 <p className="text-3xl font-semibold">
