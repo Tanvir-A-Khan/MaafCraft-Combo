@@ -20,7 +20,7 @@ backend.interceptors.request.use(
         return request;
     },
     (error) => {
-        throw new Error(error);
+        return new Error(error);
     }
 );
 
@@ -29,7 +29,7 @@ backend.interceptors.response.use(
         return response;
     },
     (error) => {
-        throw new Error(error);
+        return new Error(error);
     }
 );
 
@@ -61,10 +61,10 @@ export async function loginUser(userData) {
 export async function getAllTypes(type) {
     try {
         const response = await backend.get('/products/get-all-types?category='+type);
-        console.log(response.data);
+        // console.log(response.data);
         return response.data;
     } catch (error) {
-        throw new Error("Error fetching categories: " + error.message);
+        return ("Error fetching categories: " + error.message);
     }
 }
 
@@ -76,7 +76,7 @@ export async function getAllProducts(item, category, page, perPage) {
         const response = await backend.get(req);
         return response.data;
     } catch (error) {
-        throw error;
+        return error;
     }
 }
 
@@ -87,7 +87,7 @@ export async function getAllProductsOfDashboardCategory(dashboard) {
         const response = await backend.get(req);
         return response.data;
     } catch (error) {
-        throw error;
+        return error;
     }
 }
 
@@ -99,7 +99,7 @@ export async function getAllProductsOfCategory(category, page, per_page) {
         const response = await backend.get(req);
         return response.data;
     } catch (error) {
-        throw error;
+        return error;
     }
 }
 
@@ -110,6 +110,77 @@ export async function getNameAutoComplete(item) {
         const response = await backend.get(req);
         return response.data;
     } catch (error) {
-        throw error;
+        return error;
+    }
+}
+
+export async function addToCart(data) {
+    try {
+        let req = '/cart/add';
+        // if (item != null) req += item;
+        const response = await backend.post(req, data);
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+}
+
+export async function getCartItem(bid, email) {
+    try {
+        console.log(bid, email);
+        let req = `/cart/get?browser_id=${bid}`;
+        if (email != null) req += `&email=${email}`;
+        const response = await backend.get(req);
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+}
+
+
+export async function removeACart(cartId) {
+    try {
+        console.log(cartId);
+        let req = `/cart/delete?cart_id=${cartId}`;
+        const response = await backend.delete(req);
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+}
+
+export async function updateQuantity(cartId, quantity) {
+    try {
+        console.log(cartId, quantity);
+        let req = `/cart/update?cart_id=${cartId}&quantity=${quantity}`;
+        const response = await backend.put(req);
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+}
+
+export async function logout(cartId, quantity) {
+    try {
+        console.log(cartId, quantity);
+        let req = `/cart/update?cart_id=${cartId}&quantity=${quantity}`;
+        const response = await backend.put(req);
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+}
+
+export async function getGalleryImages() {
+    try {
+        let req = `/products/gallery`;
+        console.log(req);
+        const response = await backend.get(req);
+        // console.log(response.data);
+        return response.data;
+    } catch (error) {
+        return error;
     }
 }

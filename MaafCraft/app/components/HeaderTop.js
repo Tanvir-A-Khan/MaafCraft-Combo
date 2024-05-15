@@ -15,30 +15,31 @@ import { extractDataFromJWT } from "../auth";
 export const Context = React.createContext();
 
 const HeaderTop = () => {
+    const { globalState, setGlobalState } = useStateContext();
 
-    const {globalState, setGlobalState} = useStateContext();
-    const [isAdmin, setIsAdmin] =  useState(false);
-    useEffect(()=>{
-        if(globalState!==null & typeof globalState !== undefined){
+    const [islogged, setIslogged] = useState(globalState);
+
+    const [isAdmin, setIsAdmin] = useState(false);
+    useEffect(() => {
+        if ((globalState !== null) & (typeof globalState !== undefined)) {
             const data = extractDataFromJWT(globalState);
-            if(data){
+            if (data) {
                 console.log(data);
-                setIsAdmin(data.roles.includes("ROLE_ADMIN"))
+                setIsAdmin(data.roles.includes("ROLE_ADMIN"));
+                setIslogged(data.roles.includes("ROLE_USER"));
             }
-
         }
-    },[globalState])
+    }, [globalState]);
 
-    const handleProfile = ()=>{
+    const handleProfile = () => {
         const email = extractDataFromJWT(globalState).sub;
         console.log(email);
-    }
+    };
 
-
-    const handleLogout = () => {
+    const handleLogout = () => {    
         console.log("loggingout ...");
-        localStorage.clear();
         setGlobalState(null);
+        localStorage.removeItem("auth");
     };
     const router = useRouter();
     const [items, setItems] = useState([{ id: 0, name: "Searching...." }]);
@@ -64,56 +65,52 @@ const HeaderTop = () => {
         // onSearchSelected(item);
     };
     return (
-        <>
         <div className="w-full lg:block hidden">
-        <div className="md:flex justify-between h-auto md:px-28 bg-[#EFEFEF] py-2">
-          <h1 className="flex text-green-600 md:p-2 justify-center text-xl md:text-3xl font-semibold h-auto items-center">
-            {"🍃"} maafcraft and fashion
-          </h1>
-          <div className="hidden lg:flex flex-col items-center h-auto justify-center text-xs gap-2 text-red-600">
-            <h2>
-              <FontAwesomeIcon icon={faPhone} className="w-5" />
-              Hotline: +88 01942 257473
-            </h2>
-            <h2>
-              <FontAwesomeIcon icon={faPhone} className="w-5" />
-              Hotline: +88 01942 257473
-            </h2>
-          </div>
-          <div className="z-20 flex items-center">
-            <ReactSearchAutocomplete
-              items={items}
-              onSearch={handleOnSearch}
-              onHover={handleOnHover}
-              onSelect={handleOnSelect}
-              className="w-96"
-              />
-            <Link href={"/cart"}>
-              <AiOutlineShoppingCart className="text-4xl ms-10 hover:cursor-pointer" />
-            </Link>
-          </div>
-  
-          <div className="h-auto flex justify-center items-center gap-3 ">
-            {globalState == null && <Link href={"/registration"}>Signup</Link>}
-            {globalState && (
-                <div className="flex w-40 justify-between">
-                <button onClick={handleProfile}>Profile</button>
-                <button onClick={handleLogout}>Logout</button>
-              </div>
-            )}
-            <div>
-            {isAdmin && "Working"}
+            <div className="md:flex justify-between h-auto md:px-28 bg-[#EFEFEF] py-2">
+                <h1 className="flex text-green-600 md:p-2 justify-center text-xl md:text-3xl font-semibold h-auto items-center">
+                    {"🍃"} maafcraft and fashion
+                </h1>
+                <div className="hidden lg:flex flex-col items-center h-auto justify-center text-xs gap-2 text-red-600">
+                    <h2>
+                        <FontAwesomeIcon icon={faPhone} className="w-5" />
+                        Hotline: +88 01942 257473
+                    </h2>
+                    <h2>
+                        <FontAwesomeIcon icon={faPhone} className="w-5" />
+                        Hotline: +88 01942 257473
+                    </h2>
+                </div>
+                <div className="z-20 flex items-center">
+                    <ReactSearchAutocomplete
+                        items={items}
+                        onSearch={handleOnSearch}
+                        onHover={handleOnHover}
+                        onSelect={handleOnSelect}
+                        className="w-96"
+                    />
+                    <Link href={"/cart"}>
+                        <AiOutlineShoppingCart className="text-4xl ms-10 hover:cursor-pointer" />
+                    </Link>
+                </div>
+
+                <div className="h-auto flex justify-center items-center gap-3 ">
+                    {globalState ? (
+                        <div className="flex w-40 justify-between">
+                            <button onClick={handleProfile}>Profile</button>
+                            <button onClick={handleLogout}>Logout</button>
+                        </div>
+                    ) : (
+                        <Link href={"/registration"}>Signup</Link>
+                    )}
+                </div>
             </div>
-          </div>
+            <div className="px-96 text-green-800 font-semibold">
+                <Marquee>
+                    Maafcraft offers quality products, competitive prices, and
+                    on-time delivery.
+                </Marquee>
+            </div>
         </div>
-        <div className="px-96 text-green-800 font-semibold">
-          <Marquee>
-            Maafcraft offers quality products, competitive prices, and on-time delivery.
-          </Marquee>
-        </div>
-      </div>
-            </>
-        
     );
 };
 

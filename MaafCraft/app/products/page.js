@@ -17,16 +17,17 @@ const AllProductCat = () => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
+        setLoading(true)
         async function fetchData() {
             const productsResponse = await getAllProducts();
-            setProducts(productsResponse.data.data);
+            setProducts(productsResponse?.data?.data);
             setLoading(false);
         }
 
         fetchData();
     }, []);
 
-    if (loading) {
+    if (loading || !products) {
         return <Spinner />
         
     }

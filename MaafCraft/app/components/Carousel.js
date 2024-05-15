@@ -43,7 +43,7 @@ const Carousel = () => {
                     <div
                         style={{
                             backgroundImage: `url(${item.images})`,
-                            backgroundSize: "contain", // Set the background size to cover
+                            backgroundSize: "fit", // Set the background size to cover
                             backgroundPosition: "center", // Center the background image
                             backgroundRepeat: "no-repeat",
                             // width: '500px', // Set the width

@@ -1,9 +1,16 @@
 "use client";
-import { getAllProducts } from "@/app/api/api";
+import { useStateContext } from "@/app/Context/AppContext";
+import { addToCart, getAllProducts } from "@/app/api/api";
+import { extractDataFromJWT } from "@/app/auth";
 import Spinner from "@/app/components/Spinner";
 import React, { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+
 import ReactImageZoom from "react-image-zoom";
 import Rating from "react-rating";
+
+import { v4 as uuidv4 } from 'uuid'; 
+const browserId = uuidv4();
 
 function DisplayOutput({ text }) {
     return (
@@ -11,6 +18,31 @@ function DisplayOutput({ text }) {
             dangerouslySetInnerHTML={{ __html: text.replace(/\n/g, "<br/>") }}
         />
     );
+}
+function getTotalWeight(productDetails) {
+    let totalWeight = 0;
+    // Iterate through each product detail
+    productDetails.forEach(detail => {
+        // Extract the weight of the product from the detail
+        const weight = parseFloat(detail.weight); // Assuming weight is in numeric format
+        // Add the weight to the total
+        totalWeight += weight;
+    });
+    return totalWeight;
+}
+
+function getTotalCBM(productDetails) {
+    let totalCbm = 1;
+    // Iterate through each product detail
+    productDetails.forEach(detail => {
+        // Extract the weight of the product from the detail
+        const height = parseFloat(detail.height); // Assuming weight is in numeric format
+        const width = parseFloat(detail.width); // Assuming weight is in numeric format
+        const length = parseFloat(detail.length); // Assuming weight is in numeric format
+        // Add the weight to the total
+        totalCbm += height*width*length;
+    });
+    return totalCbm;
 }
 
 const ViewProduct = ({ params }) => {
@@ -41,7 +73,7 @@ const ViewProduct = ({ params }) => {
                 c = c * detail.length * detail.height * detail.width;
             });
             setTemp(c);
-            setCbm(c);
+            setCbm(c/100.0);
             setLoading(false);
         };
 
@@ -72,6 +104,40 @@ const ViewProduct = ({ params }) => {
         console.log(rate);
         setRatingValue(rate);
     };
+    const { globalState, setGlobalState } = useStateContext();
+    const [email, setEmail] = useState("");
+    useEffect(() => {
+        if ((globalState !== null) & (typeof globalState !== undefined)) {
+            const data = extractDataFromJWT(globalState);
+            if (data) {
+                console.log(data);
+                setEmail(data.sub)
+            }
+        }
+    }, [globalState]);
+    const handleAddCart =async () => {
+
+        if(localStorage.getItem("browserId")==undefined){
+            localStorage.setItem('browserId', browserId);
+        }
+
+        const bid = localStorage.getItem("browserId");
+
+        // console.log(browserId);
+        // console.log(bid);
+        const res =  await addToCart({
+            productName: data.item,
+            image: images.at(0),
+            weight: getTotalWeight(data.productDetails),
+            cbm: cbm.toFixed(4),
+            quantity: qunatity,
+            browserId: bid,
+            email: email,
+            price:data.pricePerPiece
+        });
+        console.log(res);
+        toast(res?.message)
+    };
 
     if (loading) {
         return <Spinner />;
@@ -79,6 +145,7 @@ const ViewProduct = ({ params }) => {
 
     return (
         <div className="flex justify-center">
+            <Toaster position="top-center" reverseOrder={true} />
             <div>
                 <div>
                     <div className="md:mx-28 m-4 flex md:flex-row flex-col gap-8">
@@ -153,14 +220,14 @@ const ViewProduct = ({ params }) => {
                                     </strong>{" "}
                                     {data.pricePerPiece}
                                 </p>
-                              
+
                                 <p>
                                     <strong className="text-slate-950">
                                         MOQ:
                                     </strong>{" "}
                                     {data.moq}
                                 </p>
-                             
+
                                 {/* <p>
                                     <strong className="text-slate-950">
                                         Lead Time:
@@ -247,7 +314,7 @@ const ViewProduct = ({ params }) => {
                                                 />
                                             </td>
                                             <td>
-                                                {cbm} cm<sup>3</sup>{" "}
+                                                {cbm.toFixed(4)} m<sup>3</sup>{" "}
                                             </td>
                                             <td>{qunatity}</td>
                                         </tr>
@@ -284,6 +351,7 @@ const ViewProduct = ({ params }) => {
                                     <button
                                         type="button"
                                         className="bg-green-600 rounded-md w-40 hover:bg-green-500 text-white px-4 py-2  text-xs transition-all"
+                                        onClick={handleAddCart}
                                     >
                                         {" "}
                                         Add To Cart

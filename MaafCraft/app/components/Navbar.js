@@ -11,6 +11,8 @@ import { useStateContext } from "../Context/AppContext";
 import { extractDataFromJWT } from "../auth";
 
 const Navbar = () => {
+
+    const path = usePathname();
     const {globalState} = useStateContext();
     const [isAdmin, setIsAdmin] =  useState(false);
     useEffect(()=>{
@@ -42,7 +44,7 @@ const Navbar = () => {
                         </li>
                     </Link>
                     <Link href="/products"  className={`hover:bg-[#555555] duration-300 hover:cursor-pointer h-[100%] 
-                            flex items-center ${usePathname() === "/products"
+                            flex items-center ${path === "/products"
                                             ? "bg-[#2e2e2e] text-white "
                                             : null
                                         }`}>
@@ -51,7 +53,7 @@ const Navbar = () => {
                         </li>
                     </Link>
                     <Link href="/about"  className={`hover:bg-[#555555] duration-300 hover:cursor-pointer h-[100%] 
-                            flex items-center ${usePathname() === "/about"
+                            flex items-center ${path === "/about"
                                             ? "bg-[#2e2e2e] text-white "
                                             : null
                                         }`}>
@@ -60,7 +62,7 @@ const Navbar = () => {
                         </li>
                     </Link>
                     <Link href="/certification"  className={`hover:bg-[#555555] duration-300 hover:cursor-pointer h-[100%] 
-                            flex items-center ${usePathname() === "/certification"
+                            flex items-center ${path === "/certification"
                                             ? "bg-[#2e2e2e] text-white "
                                             : null
                                         }`}>
@@ -69,7 +71,7 @@ const Navbar = () => {
                         </li>
                     </Link>
                     <Link href="/license"  className={`hover:bg-[#555555] duration-300 hover:cursor-pointer h-[100%] 
-                            flex items-center ${usePathname() === "/license"
+                            flex items-center ${path === "/license"
                                             ? "bg-[#2e2e2e] text-white "
                                             : null
                                         }`}>
@@ -79,7 +81,7 @@ const Navbar = () => {
                     </Link>
 
                     <Link href={"/catalog"}  className={`hover:bg-[#555555] duration-300 hover:cursor-pointer h-[100%] 
-                            flex items-center ${usePathname() === "/catalog"
+                            flex items-center ${path === "/catalog"
                                             ? "bg-[#2e2e2e] text-white "
                                             : null
                                         }`}>
@@ -88,7 +90,7 @@ const Navbar = () => {
                         </li>
                     </Link>
                     <Link href={"/material-info"}  className={`hover:bg-[#555555] duration-300 hover:cursor-pointer h-[100%] 
-                            flex items-center ${usePathname() === "/material-info"
+                            flex items-center ${path === "/material-info"
                                             ? "bg-[#2e2e2e] text-white "
                                             : null
                                         }`}>
@@ -97,7 +99,7 @@ const Navbar = () => {
                         </li>
                     </Link>
                     <Link href={"/gallery"}  className={`hover:bg-[#555555] duration-300 hover:cursor-pointer h-[100%] 
-                            flex items-center ${usePathname() === "/gallery"
+                            flex items-center ${path === "/gallery"
                                             ? "bg-[#2e2e2e] text-white "
                                             : null
                                         }`}>
@@ -106,7 +108,7 @@ const Navbar = () => {
                         </li>
                     </Link>
                     <Link href={"/contact"}  className={`hover:bg-[#555555] duration-300 hover:cursor-pointer h-[100%] 
-                            flex items-center ${usePathname() === "/contact"
+                            flex items-center ${path === "/contact"
                                             ? "bg-[#2e2e2e] text-white "
                                             : null
                                         }`}>
@@ -114,18 +116,19 @@ const Navbar = () => {
                             Contact
                         </li>
                     </Link>
-                    {
+                    {/* {
                         isAdmin &&
-                    <Link href={"/admin-panel"}  className={`hover:bg-[#555555] duration-300 hover:cursor-pointer h-[100%] 
-                    flex items-center ${usePathname() === "/admin-panel"
+                    <Link href={"/admin-panel"}  
+                    className={`hover:bg-[#555555] duration-300 hover:cursor-pointer h-[100%] 
+                    flex items-center ${path === "/admin-panel"
                     ? "bg-[#2e2e2e] text-white "
                     : null
-                }`}>
-                        <li >
+                        }`}>
+                       
                             Admin Panel
-                        </li>
+                      
                     </Link>
-                    }
+                    } */}
                 </ul>
             </div>
         </div>

@@ -39,14 +39,14 @@ const LandingMain = () => {
             </div>
 
             <div className="md:w-[30%] p-2 ">
-                <h1 className="font-bold mb-1">Discount Products</h1>
+                <h1 className="font-bold mb-4 text-xl">{"🎀"}Discount Products</h1>
 
                 {data.map((item, index) => (
-                    <Link href={`/products/${item.item}`} className="flex gap-4 mb-2 mr-2 hover:cursor-pointer hover:bg-gray-100" key={index}>
+                    <Link href={`/products/${item.item}`} className="flex gap-4 mb-3 mr-2 hover:cursor-pointer hover:bg-gray-200" key={index}>
                         <img
                             src={item.images}
                             alt="product"
-                            className="h-[85px] w-[95px]  object-cover "
+                            className="h-[85px] w-[95px]  object-cover p-1"
                         />
 
                         <div className="">
